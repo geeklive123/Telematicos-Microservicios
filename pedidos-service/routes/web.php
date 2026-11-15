@@ -1,15 +1,19 @@
 <?php
 
 use App\Http\Controllers\PedidoWebController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\WebAuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => session()->has('auth_token') ? redirect()->route('pedidos.index') : redirect()->route('login'));
+Route::get('/', fn () => session()->has('auth_token') ? redirect()->route('dashboard') : redirect()->route('login'));
 Route::get('/login', [WebAuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [WebAuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
 
 Route::middleware('web.auth')->group(function () {
+    Route::get('/dashboard', [PortalController::class, 'dashboard'])->name('dashboard');
+    Route::get('/portal/clientes', [PortalController::class, 'clientes'])->name('portal.clientes');
+    Route::get('/portal/productos', [PortalController::class, 'productos'])->name('portal.productos');
     Route::get('/pedidos', [PedidoWebController::class, 'index'])->name('pedidos.index');
     Route::get('/pedidos/crear', [PedidoWebController::class, 'create'])->name('pedidos.create');
     Route::post('/pedidos', [PedidoWebController::class, 'store'])->name('pedidos.store');

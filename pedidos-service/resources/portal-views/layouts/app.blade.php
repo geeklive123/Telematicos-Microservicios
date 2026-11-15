@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>@yield('title', 'Portal') | Administración de Pedidos | Tienda PC</title><link rel="stylesheet" href="{{ asset('css/pedidos.css') }}"><link rel="stylesheet" href="{{ asset('portal.css') }}"></head>
+<body><header class="site-header"><div class="header-content">
+@if (session()->has('auth_token'))<button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="portal-nav"><span aria-hidden="true">&#9776;</span></button>@endif
+<a class="brand" href="{{ route('dashboard') }}"><span class="brand-mark" aria-hidden="true">&#9638;</span><span>Tienda PC<small>Administración de Ventas</small></span></a>
+@if (session()->has('auth_token'))<div class="header-account"><span class="account-name">{{ data_get(session('auth_user'), 'name') }}<small>{{ data_get(session('auth_user'), 'role') }}</small></span><form method="POST" action="{{ route('logout') }}">@csrf<button class="button button-logout" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M13 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Cerrar sesión</span></button></form></div>@endif
+</div></header><div class="portal-shell {{ session()->has('auth_token') ? '' : 'guest-shell' }}">
+@if (session()->has('auth_token'))<aside class="sidebar" id="portal-nav" aria-label="Navegación principal"><p class="nav-label">MENÚ PRINCIPAL</p>
+@foreach ([['dashboard','Dashboard','M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z'],['portal.clientes','Clientes','M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 21v-2a4 4 0 0 0-3-3.87'],['portal.productos','Productos','M21 8l-9-5-9 5v9l9 5 9-5zM3 8l9 5 9-5M12 13v9'],['pedidos.index','Pedidos','M3 3h2l2 12h11l3-8H6M9 21h.01M18 21h.01']] as [$route, $label, $path])
+<a class="nav-link {{ ($route === 'pedidos.index' ? request()->routeIs('pedidos.*') : request()->routeIs($route)) ? 'active' : '' }}" href="{{ route($route) }}" @if($route === 'pedidos.index' ? request()->routeIs('pedidos.*') : request()->routeIs($route)) aria-current="page" @endif><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $path }}"/></svg><span>{{ $label }}</span></a>@endforeach</aside>@endif
+<main class="page-content">@if (session('success'))<div class="alert alert-success" role="status">{{ session('success') }}</div>@endif
+@if (session('error'))<div class="alert alert-error" role="alert">{{ session('error') }}</div>@endif
+@if ($errors->any())<div class="alert alert-error" role="alert"><strong>Revise los datos ingresados:</strong><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+@yield('content')</main></div>
+<script>const toggle = document.querySelector('.menu-toggle'); toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('nav-open'); toggle.setAttribute('aria-expanded', String(open)); });</script>@stack('scripts')</body></html>

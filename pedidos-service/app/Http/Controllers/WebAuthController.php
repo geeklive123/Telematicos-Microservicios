@@ -15,7 +15,7 @@ class WebAuthController extends Controller
     public function showLogin(): View|RedirectResponse
     {
         if (session()->has('auth_token')) {
-            return redirect()->route('pedidos.index');
+            return redirect()->route('dashboard');
         }
 
         return view('auth.login');
@@ -55,7 +55,7 @@ class WebAuthController extends Controller
         $request->session()->put('auth_token', $token);
         $request->session()->put('auth_user', Arr::only($user, ['id', 'name', 'email', 'role']));
 
-        return redirect()->route('pedidos.index');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request): RedirectResponse

@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        app('view')->getFinder()->prependLocation(resource_path('portal-views'));
     }
 }

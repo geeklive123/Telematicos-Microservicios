@@ -23,7 +23,7 @@ class WebAuthTest extends TestCase
     {
         $this->get('/pedidos')->assertRedirect(route('login'));
         $this->get('/')->assertRedirect(route('login'));
-        $this->withSession(['auth_token' => 'jwt-privado'])->get('/')->assertRedirect(route('pedidos.index'));
+        $this->withSession(['auth_token' => 'jwt-privado'])->get('/')->assertRedirect(route('dashboard'));
         $this->get('/pedidos')->assertOk()->assertDontSee('jwt-privado');
     }
 
@@ -39,7 +39,7 @@ class WebAuthTest extends TestCase
             'access_token' => 'jwt-ejemplo', 'user' => ['id' => 5, 'name' => 'Ana', 'email' => 'ana@example.com', 'role' => 'admin', 'password' => 'no-guardar'],
         ])]);
         $this->post('/login', ['email' => 'ana@example.com', 'password' => 'clave-secreta'])
-            ->assertRedirect(route('pedidos.index'))
+            ->assertRedirect(route('dashboard'))
             ->assertSessionHas('auth_token', 'jwt-ejemplo')
             ->assertSessionHas('auth_user', ['id' => 5, 'name' => 'Ana', 'email' => 'ana@example.com', 'role' => 'admin']);
         $this->assertNull(session()->get('password'));
