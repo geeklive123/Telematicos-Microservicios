@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\PedidoCreationException;
+use App\Portal\RemoteFailure;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
@@ -19,12 +20,15 @@ class ClienteService
                 ->timeout(5)
                 ->get($this->url('/api/clientes'));
         } catch (ConnectionException $exception) {
+            RemoteFailure::connection('clientes', '/api/clientes');
             throw new PedidoCreationException(
                 'No se pudieron cargar los clientes porque el servicio no está disponible.',
                 503,
                 $exception,
             );
         }
+
+        RemoteFailure::response('clientes', '/api/clientes', $response);
 
         if (! $response->successful()) {
             throw new PedidoCreationException(
@@ -54,12 +58,15 @@ class ClienteService
                 ->timeout(5)
                 ->get($this->url("/api/clientes/{$clienteId}"));
         } catch (ConnectionException $exception) {
+            RemoteFailure::connection('clientes', "/api/clientes/{$clienteId}");
             throw new PedidoCreationException(
                 'El servicio de clientes no está disponible.',
                 503,
                 $exception,
             );
         }
+
+        RemoteFailure::response('clientes', "/api/clientes/{$clienteId}", $response);
 
         if ($response->notFound()) {
             throw new PedidoCreationException('El cliente seleccionado no existe.', 422);

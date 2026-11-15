@@ -2,8 +2,9 @@
 
 namespace App\Portal;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
-use Throwable;
+use Illuminate\Support\Facades\Log;
 
 class PortalService
 {
@@ -20,6 +21,7 @@ class PortalService
             do {
                 $response = Http::acceptJson()->withoutRedirecting()->withToken($token ?? '')
                     ->connectTimeout(2)->timeout(4)->get(rtrim($url, '/')."/api/{$recurso}", $page > 1 ? ['page' => $page] : []);
+                RemoteFailure::response($servicio, "/api/{$recurso}", $response);
                 if (! $response->successful()) {
                     return null;
                 }
@@ -42,7 +44,9 @@ class PortalService
             } while ($page <= $lastPage);
 
             return $items;
-        } catch (Throwable $exception) {
+        } catch (ConnectionException $exception) {
+            RemoteFailure::connection($servicio, "/api/{$recurso}");
+
             return null;
         }
     }
@@ -54,8 +58,15 @@ class PortalService
             return false;
         }
         try {
-            return Http::withoutRedirecting()->connectTimeout(2)->timeout(4)->get(rtrim($url, '/').'/up')->successful();
-        } catch (Throwable $exception) {
+            $response = Http::withoutRedirecting()->connectTimeout(2)->timeout(4)->get(rtrim($url, '/').'/api/health');
+            if (! $response->successful()) {
+                Log::warning('Consulta de salud remota fallida.', ['servicio' => 'auth', 'endpoint' => '/api/health', 'status' => $response->status()]);
+            }
+
+            return $response->successful();
+        } catch (ConnectionException $exception) {
+            RemoteFailure::connection('auth', '/api/health');
+
             return false;
         }
     }

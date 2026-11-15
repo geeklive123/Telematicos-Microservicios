@@ -6,6 +6,7 @@ use App\Exceptions\PedidoCreationException;
 use App\Models\OutboxEvent;
 use App\Models\Pedido;
 use App\Models\PedidoAttempt;
+use App\Portal\RemoteAuthenticationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -123,6 +124,13 @@ class PedidoService
                 'error_code' => $uncertain ? 'STOCK_RESULT_UNCERTAIN' : 'CREATION_FAILED',
                 'error_message' => $uncertain ? 'El resultado requiere conciliación de inventario.' : 'No se pudo crear el pedido.',
             ]);
+            if ($exception instanceof RemoteAuthenticationException) {
+                if ($uncertain) {
+                    Log::warning('El intento requiere conciliacion tras el rechazo de autenticacion remoto.', ['attempt_uuid' => $uuid]);
+                }
+
+                throw $exception;
+            }
             if ($uncertain) {
                 throw new PedidoCreationException('El intento requiere conciliación de inventario.', 503, $exception);
             }
@@ -182,6 +190,10 @@ class PedidoService
                 'producto_en_curso' => $productoEnCurso,
                 'exception' => $exception,
             ]);
+
+            if ($exception instanceof RemoteAuthenticationException) {
+                throw $exception;
+            }
 
             if ($exception instanceof PedidoCreationException) {
                 throw new PedidoCreationException(

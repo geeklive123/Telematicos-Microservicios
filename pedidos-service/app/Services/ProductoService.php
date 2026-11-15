@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\PedidoCreationException;
+use App\Portal\RemoteFailure;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
@@ -19,12 +20,15 @@ class ProductoService
                 ->timeout(5)
                 ->get($this->url('/api/productos'));
         } catch (ConnectionException $exception) {
+            RemoteFailure::connection('productos', '/api/productos');
             throw new PedidoCreationException(
                 'No se pudieron cargar los productos porque el servicio no está disponible.',
                 503,
                 $exception,
             );
         }
+
+        RemoteFailure::response('productos', '/api/productos', $response);
 
         if (! $response->successful()) {
             throw new PedidoCreationException(
@@ -57,12 +61,15 @@ class ProductoService
                 ->timeout(5)
                 ->get($this->url("/api/productos/{$productoId}"));
         } catch (ConnectionException $exception) {
+            RemoteFailure::connection('productos', "/api/productos/{$productoId}");
             throw new PedidoCreationException(
                 'El servicio de productos no está disponible.',
                 503,
                 $exception,
             );
         }
+
+        RemoteFailure::response('productos', "/api/productos/{$productoId}", $response);
 
         if ($response->notFound()) {
             throw new PedidoCreationException('Uno de los productos seleccionados no existe.', 422);
@@ -104,12 +111,15 @@ class ProductoService
                 $response = Http::acceptJson()->withToken($token ?? '')->timeout(5)->post($this->url("/api/productos/{$productoId}/descontar-stock"), $payload);
                 break;
             } catch (ConnectionException $exception) {
+                RemoteFailure::connection('productos', "/api/productos/{$productoId}/descontar-stock");
                 $uncertain = true;
                 if ($try === 1) {
                     throw new PedidoCreationException('El servicio de productos no está disponible.', 503, $exception, true);
                 }
             }
         }
+
+        RemoteFailure::response('productos', "/api/productos/{$productoId}/descontar-stock", $response);
 
         if ($uncertain && ! $response->successful()) {
             throw new PedidoCreationException('El resultado del descuento es incierto.', 503, null, true);
@@ -139,12 +149,15 @@ class ProductoService
                     'source_reference' => $reference,
                 ]);
         } catch (ConnectionException $exception) {
+            RemoteFailure::connection('productos', "/api/productos/{$productoId}/reponer-stock");
             throw new PedidoCreationException(
                 'El servicio de productos no está disponible.',
                 503,
                 $exception,
             );
         }
+
+        RemoteFailure::response('productos', "/api/productos/{$productoId}/reponer-stock", $response);
 
         if ($response->status() === 409) {
             throw new PedidoCreationException('El servicio de productos rechazó la reposición por un conflicto.', 409);

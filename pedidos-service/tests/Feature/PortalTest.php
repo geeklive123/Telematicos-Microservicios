@@ -28,7 +28,7 @@ class PortalTest extends TestCase
     public function test_dashboard_y_modulos_muestran_datos_reales_y_transmiten_jwt(): void
     {
         Http::fake([
-            'http://auth.test/up' => Http::response('ok'),
+            'http://auth.test/api/health' => Http::response('ok'),
             'http://clientes.test/api/clientes' => Http::response(['data' => [['nombre' => 'Ana', 'apellido' => 'Pérez', 'telefono' => '123', 'direccion' => 'Calle 1', 'activo' => true]]]),
             'http://productos.test/api/productos' => Http::response(['data' => [['nombre' => 'CPU', 'precio' => 50, 'stock' => 2, 'activo' => true], ['nombre' => 'Otro', 'activo' => false]]]),
         ]);
@@ -42,7 +42,7 @@ class PortalTest extends TestCase
 
     public function test_falla_parcial_no_interrumpe_portal_ni_pedidos(): void
     {
-        Http::fake(['http://auth.test/up' => Http::failedConnection(), 'http://clientes.test/api/clientes' => Http::response([], 503), 'http://productos.test/api/productos' => Http::response([['id' => 1, 'nombre' => 'CPU', 'precio' => 10, 'stock' => 9, 'activo' => true]])]);
+        Http::fake(['http://auth.test/api/health' => Http::failedConnection(), 'http://clientes.test/api/clientes' => Http::response([], 503), 'http://productos.test/api/productos' => Http::response([['id' => 1, 'nombre' => 'CPU', 'precio' => 10, 'stock' => 9, 'activo' => true]])]);
         $this->withSession(['auth_token' => 'jwt', 'auth_user' => ['name' => 'Ana']]);
         $this->get('/dashboard')->assertOk()->assertSee('No disponible')->assertViewHas('totalClientes', null)->assertViewHas('productosActivos', 1);
         $this->get('/portal/clientes')->assertOk()->assertSee('El servicio de clientes no está disponible temporalmente.');
@@ -50,6 +50,7 @@ class PortalTest extends TestCase
         $this->get('/pedidos')->assertOk();
         $this->get('/pedidos/crear')->assertOk()->assertSee('No se pudieron cargar los clientes');
     }
+
     public function test_html_usa_utf8_y_conserva_nombres_unicode(): void
     {
         Http::fake([
@@ -64,12 +65,12 @@ class PortalTest extends TestCase
             ->assertDontSee('AdministraciÃ³n');
     }
 
-    public function test_401_remoto_y_fallo_productos_se_controlan(): void
+    public function test_503_remoto_y_fallo_productos_se_controlan(): void
     {
         Http::fake([
-            'http://auth.test/up' => Http::response('ok'),
-            'http://clientes.test/api/clientes' => Http::response([], 401),
-            'http://productos.test/api/productos' => Http::response([], 401),
+            'http://auth.test/api/health' => Http::response('ok'),
+            'http://clientes.test/api/clientes' => Http::response([], 503),
+            'http://productos.test/api/productos' => Http::response([], 503),
         ]);
         $this->withSession(['auth_token' => 'jwt', 'auth_user' => ['name' => 'Ana']]);
         $this->get('/dashboard')->assertOk()->assertSee('No disponible');
