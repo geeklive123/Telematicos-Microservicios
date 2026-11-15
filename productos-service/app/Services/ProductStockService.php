@@ -25,7 +25,7 @@ class ProductStockService
                 $before = $lockedProduct->stock;
                 $quantity = (int) $data['cantidad'];
                 if ($type === 'discount' && ! $lockedProduct->activo) {
-                    throw new ProductStockConflictException('El producto estÃ¡ inactivo.');
+                    throw new ProductStockConflictException('El producto está inactivo.');
                 }
                 if ($type === 'discount' && $before < $quantity) {
                     throw new ProductStockConflictException('Stock insuficiente.', ['stock_disponible' => $before]);
@@ -68,7 +68,7 @@ class ProductStockService
             || $operation->quantity !== (int) $data['cantidad']
             || $operation->source_type !== ($data['source_type'] ?? null)
             || $operation->source_reference !== ($data['source_reference'] ?? null)) {
-            throw new ProductStockConflictException('La clave de idempotencia ya fue utilizada para otra operaciÃ³n.');
+            throw new ProductStockConflictException('La clave de idempotencia ya fue utilizada para otra operación.');
         }
 
         return ['operation' => $operation, 'already_processed' => true];

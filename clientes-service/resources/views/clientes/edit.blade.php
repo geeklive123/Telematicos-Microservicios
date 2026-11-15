@@ -7,7 +7,7 @@
         <div>
             <p class="eyebrow">Clientes</p>
             <h1>Editar cliente</h1>
-            <p class="page-description">Actualiza la informaciÃ³n de {{ $cliente->nombre }} {{ $cliente->apellido }}.</p>
+            <p class="page-description">Actualiza la información de {{ $cliente->nombre }} {{ $cliente->apellido }}.</p>
         </div>
     </div>
 

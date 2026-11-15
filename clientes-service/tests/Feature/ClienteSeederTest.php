@@ -23,7 +23,7 @@ class ClienteSeederTest extends TestCase
             ->where('email', 'lucia.vargas@example.com')
             ->firstOrFail();
 
-        $this->assertSame('LucÃ­a', $lucia->nombre);
+        $this->assertSame('Lucía', $lucia->nombre);
         $this->assertFalse($lucia->activo);
     }
 }

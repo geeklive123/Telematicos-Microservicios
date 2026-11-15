@@ -42,7 +42,7 @@ Reglas:
 
 \- no usar migrate:fresh
 
-\- email Ãºnico
+\- email único
 
 \- activo boolean
 

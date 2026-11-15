@@ -10,7 +10,7 @@
     <header class="site-header">
         <div class="container header-content">
             <a class="brand" href="{{ route('clientes.index') }}">Tienda PC</a>
-            <p>AdministraciÃ³n de Clientes</p>
+            <p>Administración de Clientes</p>
         </div>
     </header>
 
@@ -25,7 +25,7 @@
     </main>
 
     <footer class="site-footer">
-        <div class="container">Clientes Service Â· Tienda de Componentes de PC</div>
+        <div class="container">Clientes Service · Tienda de Componentes de PC</div>
     </footer>
 </body>
 </html>

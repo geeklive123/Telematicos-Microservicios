@@ -15,7 +15,7 @@ class ClienteWebTest extends TestCase
         $this->get('/clientes')
             ->assertOk()
             ->assertViewIs('clientes.index')
-            ->assertSee('AdministraciÃ³n de Clientes');
+            ->assertSee('Administración de Clientes');
     }
 
     public function test_create_form_returns_ok(): void

@@ -28,7 +28,7 @@
     </div>
 
     <div class="field field-full">
-        <label for="telefono">TelÃ©fono <span class="optional">Opcional</span></label>
+        <label for="telefono">Teléfono <span class="optional">Opcional</span></label>
         <input id="telefono" name="telefono" type="tel" maxlength="30" value="{{ old('telefono', $cliente->telefono ?? '') }}">
         @error('telefono')
             <span class="field-error">{{ $message }}</span>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="field field-full">
-        <label for="direccion">DirecciÃ³n <span class="optional">Opcional</span></label>
+        <label for="direccion">Dirección <span class="optional">Opcional</span></label>
         <textarea id="direccion" name="direccion" rows="4">{{ old('direccion', $cliente->direccion ?? '') }}</textarea>
         @error('direccion')
             <span class="field-error">{{ $message }}</span>

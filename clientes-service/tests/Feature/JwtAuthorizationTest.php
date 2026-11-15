@@ -72,8 +72,8 @@ class JwtAuthorizationTest extends TestCase
         $created = $this->postJson('/api/clientes', $data)->assertCreated();
         $id = $created->json('id');
         $this->getJson("/api/clientes/{$id}")->assertOk();
-        $data['nombre'] = 'Ana MarÃƒÂ­a';
-        $this->putJson("/api/clientes/{$id}", $data)->assertOk()->assertJsonPath('nombre', 'Ana MarÃƒÂ­a');
+        $data['nombre'] = 'Ana MarÃ­a';
+        $this->putJson("/api/clientes/{$id}", $data)->assertOk()->assertJsonPath('nombre', 'Ana MarÃ­a');
         $this->deleteJson("/api/clientes/{$id}")->assertForbidden();
     }
 }

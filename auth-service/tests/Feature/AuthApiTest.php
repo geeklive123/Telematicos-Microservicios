@@ -44,7 +44,7 @@ class AuthApiTest extends TestCase
     public function test_inactive_user_returns_403(): void
     {
         $user = User::factory()->create(['activo' => false]);
-        $this->postJson('/api/auth/login', ['email' => $user->email, 'password' => 'password'])->assertForbidden()->assertJsonPath('message', 'El usuario estÃ¡ inactivo.');
+        $this->postJson('/api/auth/login', ['email' => $user->email, 'password' => 'password'])->assertForbidden()->assertJsonPath('message', 'El usuario está inactivo.');
     }
 
     public function test_me_requires_a_token(): void

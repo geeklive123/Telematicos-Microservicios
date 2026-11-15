@@ -17,7 +17,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Credenciales incorrectas.'], 401);
         }
         if (! $user->activo) {
-            return response()->json(['message' => 'El usuario estÃ¡ inactivo.'], 403);
+            return response()->json(['message' => 'El usuario está inactivo.'], 403);
         }
 
         return $this->tokenResponse(auth('api')->login($user), $user);
@@ -32,7 +32,7 @@ class AuthController extends Controller
     {
         auth('api')->logout();
 
-        return response()->json(['message' => 'SesiÃ³n cerrada.']);
+        return response()->json(['message' => 'Sesión cerrada.']);
     }
 
     public function refresh(): JsonResponse

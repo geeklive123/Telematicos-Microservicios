@@ -15,18 +15,18 @@ class ClienteSeeder extends Seeder
         $clientes = [
             [
                 'nombre' => 'Juan',
-                'apellido' => 'PÃ©rez',
+                'apellido' => 'Pérez',
                 'email' => 'juan.perez@example.com',
                 'telefono' => '70711111',
-                'direccion' => 'Av. AmÃ©rica 123, Cochabamba',
+                'direccion' => 'Av. América 123, Cochabamba',
                 'activo' => true,
             ],
             [
-                'nombre' => 'MarÃ­a',
-                'apellido' => 'LÃ³pez',
+                'nombre' => 'María',
+                'apellido' => 'López',
                 'email' => 'maria.lopez@example.com',
                 'telefono' => '70722222',
-                'direccion' => 'Calle EspaÃ±a 456, Cochabamba',
+                'direccion' => 'Calle España 456, Cochabamba',
                 'activo' => true,
             ],
             [
@@ -54,11 +54,11 @@ class ClienteSeeder extends Seeder
                 'activo' => true,
             ],
             [
-                'nombre' => 'LucÃ­a',
+                'nombre' => 'Lucía',
                 'apellido' => 'Vargas',
                 'email' => 'lucia.vargas@example.com',
                 'telefono' => '70766666',
-                'direccion' => 'Av. Melchor PÃ©rez 987, Cochabamba',
+                'direccion' => 'Av. Melchor Pérez 987, Cochabamba',
                 'activo' => false,
             ],
         ];

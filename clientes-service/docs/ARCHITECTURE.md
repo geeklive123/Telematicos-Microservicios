@@ -24,9 +24,9 @@ Clientes Service:
 
 \- datos personales
 
-\- telÃ©fono
+\- teléfono
 
-\- direcciÃ³n
+\- dirección
 
 \- estado
 
@@ -54,7 +54,7 @@ pedidos\_db
 
 
 
-ComunicaciÃ³n:
+Comunicación:
 
 HTTP REST + JSON
 
@@ -66,7 +66,7 @@ No existen Foreign Keys entre bases de datos de diferentes microservicios.
 
 Ejemplo:
 
-pedidos.cliente\_id referencia lÃ³gicamente a un cliente,
+pedidos.cliente\_id referencia lógicamente a un cliente,
 
 pero la existencia del cliente se valida mediante la API de Clientes.
 

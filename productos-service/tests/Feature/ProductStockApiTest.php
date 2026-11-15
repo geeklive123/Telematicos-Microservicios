@@ -77,7 +77,7 @@ class ProductStockApiTest extends TestCase
         $this->postJson("/api/productos/{$product->id}/descontar-stock", ['cantidad' => 2, 'idempotency_key' => 'test'])
             ->assertConflict()
             ->assertExactJson([
-                'message' => 'El producto estÃ¡ inactivo.',
+                'message' => 'El producto está inactivo.',
             ]);
 
         $this->assertDatabaseHas('products', [
@@ -144,7 +144,7 @@ class ProductStockApiTest extends TestCase
             [$url, [...$body, 'source_reference' => 'other']],
         ] as [$target, $payload]) {
             $this->postJson($target, $payload)->assertConflict()
-                ->assertJsonPath('message', 'La clave de idempotencia ya fue utilizada para otra operaciÃ³n.');
+                ->assertJsonPath('message', 'La clave de idempotencia ya fue utilizada para otra operación.');
         }
         $this->assertSame(8, $product->fresh()->stock);
         $this->assertSame(9, $other->fresh()->stock);

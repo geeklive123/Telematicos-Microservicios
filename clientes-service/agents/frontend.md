@@ -14,5 +14,5 @@ Si se crea interfaz:
 
 \- no usar SPA salvo solicitud
 
-\- no mezclar lÃ³gica de vista con lÃ³gica de API
+\- no mezclar lógica de vista con lógica de API
 

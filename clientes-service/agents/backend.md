@@ -14,11 +14,11 @@ Preferir:
 
 \- Eloquent
 
-\- Services si aparece lÃ³gica de negocio
+\- Services si aparece lógica de negocio
 
 \- respuestas JSON
 
-\- cÃ³digos HTTP correctos
+\- códigos HTTP correctos
 
 
 

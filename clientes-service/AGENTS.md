@@ -9,7 +9,7 @@ Stack:
 - API REST
 - JSON
 
-Este repositorio corresponde Ãºnicamente a clientes-service.
+Este repositorio corresponde únicamente a clientes-service.
 
 Arquitectura general:
 - productos-service
@@ -24,9 +24,9 @@ Cada microservicio:
 
 Responsabilidad de clientes-service:
 - clientes;
-- datos personales bÃ¡sicos;
-- telÃ©fono;
-- direcciÃ³n;
+- datos personales básicos;
+- teléfono;
+- dirección;
 - estado activo/inactivo.
 
 Base de datos:
@@ -36,12 +36,12 @@ Tabla principal prevista:
 clientes
 
 Reglas para Codex:
-- Leer este archivo antes de modificar cÃ³digo.
-- No cambiar la arquitectura sin autorizaciÃ³n.
+- Leer este archivo antes de modificar código.
+- No cambiar la arquitectura sin autorización.
 - No hacer git commit ni git push.
 - No ejecutar migrate:fresh.
 - No borrar datos.
-- No agregar funcionalidades de Productos o Pedidos aquÃ­.
+- No agregar funcionalidades de Productos o Pedidos aquí.
 - Usar migraciones Laravel.
 - Usar Controllers, Models y Form Requests.
 - Mantener respuestas JSON claras.

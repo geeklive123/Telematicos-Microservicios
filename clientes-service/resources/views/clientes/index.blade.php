@@ -58,8 +58,8 @@
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
-                        <th>TelÃ©fono</th>
-                        <th>DirecciÃ³n</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
                         <th>Estado</th>
                         <th class="actions-column">Acciones</th>
                     </tr>
@@ -70,8 +70,8 @@
                             <td class="cell-strong">{{ $cliente->nombre }}</td>
                             <td>{{ $cliente->apellido }}</td>
                             <td><a class="email-link" href="mailto:{{ $cliente->email }}">{{ $cliente->email }}</a></td>
-                            <td>{{ $cliente->telefono ?: 'â€”' }}</td>
-                            <td>{{ $cliente->direccion ?: 'â€”' }}</td>
+                            <td>{{ $cliente->telefono ?: '—' }}</td>
+                            <td>{{ $cliente->direccion ?: '—' }}</td>
                             <td>
                                 <span class="badge {{ $cliente->activo ? 'badge-active' : 'badge-inactive' }}">
                                     {{ $cliente->activo ? 'Activo' : 'Inactivo' }}
@@ -80,7 +80,7 @@
                             <td>
                                 <div class="row-actions">
                                     <a class="button button-small button-secondary" href="{{ route('clientes.edit', $cliente) }}">Editar</a>
-                                    <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('Â¿Seguro que deseas eliminar este cliente?');">
+                                    <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
                                         @csrf
                                         @method('DELETE')
                                         <button class="button button-small button-danger" type="submit">Eliminar</button>
