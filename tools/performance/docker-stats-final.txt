@@ -1,0 +1,12 @@
+telematicos-academico-notificaciones-worker-1|0.00%|34.39MiB / 7.611GiB
+telematicos-academico-pedidos-service-1|0.03%|68.19MiB / 7.611GiB
+telematicos-academico-notificaciones-service-1|0.02%|56.58MiB / 7.611GiB
+telematicos-academico-clientes-service-1|0.03%|58.33MiB / 7.611GiB
+telematicos-academico-productos-service-1|0.03%|61.45MiB / 7.611GiB
+telematicos-academico-auth-service-1|0.02%|61.74MiB / 7.611GiB
+telematicos-academico-rabbitmq-1|0.57%|128.5MiB / 7.611GiB
+telematicos-academico-pedidos-db-1|0.69%|452.9MiB / 7.611GiB
+telematicos-academico-auth-db-1|0.78%|450.3MiB / 7.611GiB
+telematicos-academico-clientes-db-1|0.75%|457.1MiB / 7.611GiB
+telematicos-academico-productos-db-1|0.69%|458.4MiB / 7.611GiB
+telematicos-academico-notificaciones-db-1|0.91%|473.2MiB / 7.611GiB

@@ -1,0 +1,19 @@
+# MensajerÃ­a RabbitMQ
+
+Pedidos guarda un evento `pedido.creado` en `outbox_events` dentro de la misma transacciÃ³n que el pedido, sus detalles y la finalizaciÃ³n del intento. El evento contiene `event_id`, `event_type`, `occurred_at`, `pedido_id`, `cliente_id`, `total` y `detalles` (producto, nombre, cantidad y precio). Se construye con campos explÃ­citos y no contiene el bearer ni cabeceras.
+
+El proyecto usa `php-amqplib/php-amqplib` 3.7.5 en Pedidos, un cliente AMQP 0-9-1 en PHP cuya restricciÃ³n admite PHP 8.4. Configurar `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USER`, `RABBITMQ_PASSWORD`, `RABBITMQ_VHOST`, `RABBITMQ_EXCHANGE`, `RABBITMQ_QUEUE` y `RABBITMQ_ROUTING_KEY` en el entorno, sin guardar credenciales en Git. Los valores de topologÃ­a previstos son exchange durable `tienda.events` tipo `topic`, cola durable `notificaciones.pedidos` y routing key `pedido.creado`.
+
+Una vez migrada la base de Pedidos, ejecutar `php artisan outbox:publish --limit=100` para intentar los registros `pending` y `failed`. El comando no corre automÃ¡ticamente. El publicador declara y enlaza la cola, usa mensajes persistentes, `mandatory` y confirmaciones del broker. Si falla, guarda el tipo de error sin credenciales y conserva el mismo `event_id` para reintentar. Un bloqueo de fila serializa los publicadores sobre el mismo registro. Una caÃ­da tras la aceptaciÃ³n del broker y antes de actualizar la base puede producir una entrega repetida: el consumidor debe ser idempotente. La confirmaciÃ³n del broker no demuestra que el consumidor haya procesado el mensaje.
+
+## Consumidor y procesamiento
+
+`notificaciones-service` configura las mismas variables y usa `php-amqplib/php-amqplib` 3.7.5. Copiar `.env.example` a `.env`, configurar una base propia, `APP_KEY` y las credenciales del broker, y ejecutar `php artisan migrate`. Iniciar el consumidor con `php artisan rabbitmq:consume`. Es un proceso independiente y debe supervisarse; Ctrl+C lo detiene. El endpoint pÃºblico de salud es `GET /api/health` y el puerto de desarrollo previsto es 8004.
+
+El consumidor declara el exchange durable `tienda.events` tipo topic, la cola durable `notificaciones.pedidos` y el binding `pedido.creado`, con prefetch 1. Decodifica JSON y delega la validaciÃ³n y persistencia a `PedidoCreadoProcessor`. Este acepta Ãºnicamente `pedido.creado`, valida UUID, fecha, IDs, total y detalles, y registra dentro de una Ãºnica transacciÃ³n `processed_events`, una notificaciÃ³n y una factura. `event_id` es Ãºnico en las tres tablas; una inserciÃ³n atÃ³mica en `processed_events` evita duplicar el trabajo ante entregas simultÃ¡neas. No se guardan el payload completo, cabeceras ni credenciales. Los IDs de pedido y cliente son referencias lÃ³gicas, sin claves forÃ¡neas externas.
+
+La notificaciÃ³n es local y tiene estado `generated`. La factura usa el total del evento y una referencia `SIM-<pedido_id>-<event_id>`; es una simulaciÃ³n y no tiene validez tributaria. No se envÃ­a correo.
+
+Tras el commit local se envÃ­a ACK, tambiÃ©n para un duplicado ya procesado. Un JSON invÃ¡lido, payload invÃ¡lido o tipo distinto se rechaza sin reencolar: sin una dead-letter queue configurada en el broker se descarta. Ante otro error, se reencola el mensaje y se detiene el proceso para evitar reintentos agresivos; revisar los registros y la causa antes de reiniciarlo. Si falla la conexiÃ³n o el ACK despuÃ©s de confirmar la transacciÃ³n, RabbitMQ puede reentregar y el registro Ãºnico evita duplicados. Los logs solo incluyen el tipo de excepciÃ³n, sin payload ni credenciales.
+
+Se probÃ³ un broker RabbitMQ real temporal con SQLite aislada: dos publicaciones del mismo `event_id` produjeron un registro en cada una de las tres tablas y la cola quedÃ³ con cero mensajes listos y cero sin confirmar. Esta prueba no valida la integraciÃ³n completa de los demÃ¡s servicios ni sustituye una prueba de concurrencia en la base de producciÃ³n.

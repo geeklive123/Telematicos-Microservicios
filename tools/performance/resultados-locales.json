@@ -1,0 +1,307 @@
+{
+  "started_at": "2026-11-14T22:59:13-04:00",
+  "concurrency": 5,
+  "results": [
+    {
+      "endpoint": "Auth login",
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/auth/login",
+      "level": "Baja",
+      "requests": 10,
+      "successes": 10,
+      "failures": 0,
+      "mean_ms": 762.52,
+      "min_ms": 189.99,
+      "max_ms": 977.24,
+      "elapsed_s": 1.909,
+      "requests_per_second": 5.24,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 10
+      },
+      "started_at": "2026-11-14T22:59:13-04:00",
+      "finished_at": "2026-11-14T22:59:15-04:00"
+    },
+    {
+      "endpoint": "Auth login",
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/auth/login",
+      "level": "Media",
+      "requests": 50,
+      "successes": 50,
+      "failures": 0,
+      "mean_ms": 906.54,
+      "min_ms": 195.73,
+      "max_ms": 1072.33,
+      "elapsed_s": 9.471,
+      "requests_per_second": 5.28,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 50
+      },
+      "started_at": "2026-11-14T22:59:15-04:00",
+      "finished_at": "2026-11-14T22:59:24-04:00"
+    },
+    {
+      "endpoint": "Auth login",
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/auth/login",
+      "level": "Alta",
+      "requests": 100,
+      "successes": 100,
+      "failures": 0,
+      "mean_ms": 928.22,
+      "min_ms": 188.06,
+      "max_ms": 1097.65,
+      "elapsed_s": 18.959,
+      "requests_per_second": 5.27,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 100
+      },
+      "started_at": "2026-11-14T22:59:24-04:00",
+      "finished_at": "2026-11-14T22:59:43-04:00"
+    },
+    {
+      "endpoint": "Productos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8001/api/productos",
+      "level": "Baja",
+      "requests": 10,
+      "successes": 10,
+      "failures": 0,
+      "mean_ms": 46.09,
+      "min_ms": 14.54,
+      "max_ms": 59.35,
+      "elapsed_s": 0.114,
+      "requests_per_second": 87.46,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 10
+      },
+      "started_at": "2026-11-14T22:59:43-04:00",
+      "finished_at": "2026-11-14T22:59:44-04:00"
+    },
+    {
+      "endpoint": "Productos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8001/api/productos",
+      "level": "Media",
+      "requests": 50,
+      "successes": 50,
+      "failures": 0,
+      "mean_ms": 72.93,
+      "min_ms": 12.32,
+      "max_ms": 132.53,
+      "elapsed_s": 0.755,
+      "requests_per_second": 66.2,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 50
+      },
+      "started_at": "2026-11-14T22:59:44-04:00",
+      "finished_at": "2026-11-14T22:59:44-04:00"
+    },
+    {
+      "endpoint": "Productos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8001/api/productos",
+      "level": "Alta",
+      "requests": 100,
+      "successes": 100,
+      "failures": 0,
+      "mean_ms": 61.71,
+      "min_ms": 14.82,
+      "max_ms": 83.57,
+      "elapsed_s": 1.258,
+      "requests_per_second": 79.48,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 100
+      },
+      "started_at": "2026-11-14T22:59:44-04:00",
+      "finished_at": "2026-11-14T22:59:46-04:00"
+    },
+    {
+      "endpoint": "Clientes",
+      "method": "GET",
+      "url": "http://127.0.0.1:8002/api/clientes",
+      "level": "Baja",
+      "requests": 10,
+      "successes": 10,
+      "failures": 0,
+      "mean_ms": 40.2,
+      "min_ms": 12.33,
+      "max_ms": 52.27,
+      "elapsed_s": 0.103,
+      "requests_per_second": 96.77,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 10
+      },
+      "started_at": "2026-11-14T22:59:46-04:00",
+      "finished_at": "2026-11-14T22:59:46-04:00"
+    },
+    {
+      "endpoint": "Clientes",
+      "method": "GET",
+      "url": "http://127.0.0.1:8002/api/clientes",
+      "level": "Media",
+      "requests": 50,
+      "successes": 50,
+      "failures": 0,
+      "mean_ms": 53.68,
+      "min_ms": 13.99,
+      "max_ms": 66.99,
+      "elapsed_s": 0.56,
+      "requests_per_second": 89.23,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 50
+      },
+      "started_at": "2026-11-14T22:59:46-04:00",
+      "finished_at": "2026-11-14T22:59:46-04:00"
+    },
+    {
+      "endpoint": "Clientes",
+      "method": "GET",
+      "url": "http://127.0.0.1:8002/api/clientes",
+      "level": "Alta",
+      "requests": 100,
+      "successes": 100,
+      "failures": 0,
+      "mean_ms": 51.47,
+      "min_ms": 11.58,
+      "max_ms": 63.68,
+      "elapsed_s": 1.051,
+      "requests_per_second": 95.15,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 100
+      },
+      "started_at": "2026-11-14T22:59:46-04:00",
+      "finished_at": "2026-11-14T22:59:47-04:00"
+    },
+    {
+      "endpoint": "Pedidos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8003/api/pedidos",
+      "level": "Baja",
+      "requests": 10,
+      "successes": 10,
+      "failures": 0,
+      "mean_ms": 44.73,
+      "min_ms": 14.82,
+      "max_ms": 57.03,
+      "elapsed_s": 0.111,
+      "requests_per_second": 90.2,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 10
+      },
+      "started_at": "2026-11-14T22:59:47-04:00",
+      "finished_at": "2026-11-14T22:59:47-04:00"
+    },
+    {
+      "endpoint": "Pedidos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8003/api/pedidos",
+      "level": "Media",
+      "requests": 50,
+      "successes": 50,
+      "failures": 0,
+      "mean_ms": 54.0,
+      "min_ms": 12.47,
+      "max_ms": 64.98,
+      "elapsed_s": 0.567,
+      "requests_per_second": 88.14,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 50
+      },
+      "started_at": "2026-11-14T22:59:47-04:00",
+      "finished_at": "2026-11-14T22:59:48-04:00"
+    },
+    {
+      "endpoint": "Pedidos",
+      "method": "GET",
+      "url": "http://127.0.0.1:8003/api/pedidos",
+      "level": "Alta",
+      "requests": 100,
+      "successes": 100,
+      "failures": 0,
+      "mean_ms": 53.78,
+      "min_ms": 11.85,
+      "max_ms": 67.75,
+      "elapsed_s": 1.099,
+      "requests_per_second": 91.0,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 100
+      },
+      "started_at": "2026-11-14T22:59:48-04:00",
+      "finished_at": "2026-11-14T22:59:49-04:00"
+    },
+    {
+      "endpoint": "Health auth",
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/health",
+      "level": "Baja",
+      "requests": 10,
+      "successes": 10,
+      "failures": 0,
+      "mean_ms": 21.5,
+      "min_ms": 9.78,
+      "max_ms": 34.94,
+      "elapsed_s": 0.056,
+      "requests_per_second": 177.57,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 10
+      },
+      "started_at": "2026-11-14T22:59:49-04:00",
+      "finished_at": "2026-11-14T22:59:49-04:00"
+    },
+    {
+      "endpoint": "Health auth",
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/health",
+      "level": "Media",
+      "requests": 50,
+      "successes": 50,
+      "failures": 0,
+      "mean_ms": 21.52,
+      "min_ms": 8.2,
+      "max_ms": 34.56,
+      "elapsed_s": 0.226,
+      "requests_per_second": 221.38,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 50
+      },
+      "started_at": "2026-11-14T22:59:49-04:00",
+      "finished_at": "2026-11-14T22:59:49-04:00"
+    },
+    {
+      "endpoint": "Health auth",
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/health",
+      "level": "Alta",
+      "requests": 100,
+      "successes": 100,
+      "failures": 0,
+      "mean_ms": 23.03,
+      "min_ms": 6.23,
+      "max_ms": 38.38,
+      "elapsed_s": 0.474,
+      "requests_per_second": 211.08,
+      "error_percent": 0.0,
+      "status_counts": {
+        "200": 100
+      },
+      "started_at": "2026-11-14T22:59:49-04:00",
+      "finished_at": "2026-11-14T22:59:50-04:00"
+    }
+  ],
+  "finished_at": "2026-11-14T22:59:50-04:00"
+}
