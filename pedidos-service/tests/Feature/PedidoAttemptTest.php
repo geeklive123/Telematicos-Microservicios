@@ -204,7 +204,7 @@ class PedidoAttemptTest extends TestCase
         Http::fake();
         try {
             app(PedidoService::class)->resumeAttempt($attempt->attempt_uuid);
-            $this->fail('Un intento en compensaciÃ³n requiere conciliaciÃ³n.');
+            $this->fail('Un intento en compensación requiere conciliación.');
         } catch (PedidoCreationException $exception) {
             $this->assertSame(503, $exception->status());
         }

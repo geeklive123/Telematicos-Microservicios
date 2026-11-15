@@ -22,6 +22,7 @@ class PedidoWebTest extends TestCase
 
         config()->set('services.clientes.url', self::CLIENTES_URL);
         config()->set('services.productos.url', self::PRODUCTOS_URL);
+        $this->withSession(['auth_token' => 'web-test-token', 'auth_user' => ['name' => 'Usuario de prueba', 'role' => 'admin']]);
     }
 
     public function test_listado_responde_200(): void
@@ -29,7 +30,7 @@ class PedidoWebTest extends TestCase
         $this->get('/pedidos')
             ->assertOk()
             ->assertViewIs('pedidos.index')
-            ->assertSee('AdministraciÃ³n de Pedidos');
+            ->assertSee('Administración de Pedidos');
     }
 
     public function test_formulario_crear_responde_200(): void
@@ -46,7 +47,7 @@ class PedidoWebTest extends TestCase
     {
         Http::fake([
             self::CLIENTES_URL.'/api/clientes' => Http::response([
-                ['id' => 1, 'nombre' => 'Ana', 'apellido' => 'PÃ©rez', 'email' => 'ana@test.com', 'activo' => true],
+                ['id' => 1, 'nombre' => 'Ana', 'apellido' => 'Pérez', 'email' => 'ana@test.com', 'activo' => true],
                 ['id' => 2, 'nombre' => 'Luis', 'apellido' => 'Rojas', 'email' => 'luis@test.com', 'activo' => false],
             ]),
             self::PRODUCTOS_URL.'/api/productos' => Http::response($this->products()),
@@ -54,7 +55,7 @@ class PedidoWebTest extends TestCase
 
         $this->get('/pedidos/crear')
             ->assertOk()
-            ->assertSee('Ana PÃ©rez - ana@test.com')
+            ->assertSee('Ana Pérez - ana@test.com')
             ->assertDontSee('Luis Rojas - luis@test.com');
     }
 
@@ -128,7 +129,7 @@ class PedidoWebTest extends TestCase
             ->assertOk()
             ->assertViewIs('pedidos.show')
             ->assertSee("Pedido #{$pedido->id}")
-            ->assertSee('Ryzen histÃ³rico');
+            ->assertSee('Ryzen histórico');
     }
 
     public function test_muestra_formulario_editar(): void
@@ -138,7 +139,7 @@ class PedidoWebTest extends TestCase
         $this->get("/pedidos/{$pedido->id}/editar")
             ->assertOk()
             ->assertViewIs('pedidos.edit')
-            ->assertSee('Solo puede modificar el estado, mÃ©todo de pago y fecha.')
+            ->assertSee('Solo puede modificar el estado, método de pago y fecha.')
             ->assertDontSee('name="cliente_id"', false)
             ->assertDontSee('name="detalles', false);
     }
@@ -171,7 +172,7 @@ class PedidoWebTest extends TestCase
 
         $this->get('/pedidos/crear')
             ->assertOk()
-            ->assertSee('No se pudieron cargar los clientes porque el servicio no estÃ¡ disponible.');
+            ->assertSee('No se pudieron cargar los clientes porque el servicio no está disponible.');
     }
 
     public function test_error_de_productos_service_se_muestra_correctamente(): void
@@ -183,7 +184,7 @@ class PedidoWebTest extends TestCase
 
         $this->get('/pedidos/crear')
             ->assertOk()
-            ->assertSee('No se pudieron cargar los productos porque el servicio no estÃ¡ disponible.');
+            ->assertSee('No se pudieron cargar los productos porque el servicio no está disponible.');
     }
 
     public function test_paginacion_muestra_diez_registros_por_pagina(): void
@@ -235,7 +236,7 @@ class PedidoWebTest extends TestCase
         return [[
             'id' => 1,
             'nombre' => 'Ana',
-            'apellido' => 'PÃ©rez',
+            'apellido' => 'Pérez',
             'email' => 'ana@test.com',
             'activo' => true,
         ]];
@@ -291,7 +292,7 @@ class PedidoWebTest extends TestCase
         $pedido = $this->createPedido();
         $pedido->detalles()->create([
             'producto_id' => 10,
-            'producto_nombre' => 'Ryzen histÃ³rico',
+            'producto_nombre' => 'Ryzen histórico',
             'precio_unitario' => 950,
             'cantidad' => 1,
             'subtotal' => 950,

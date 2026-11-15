@@ -63,7 +63,7 @@ class PedidoExternalServicesTest extends TestCase
 
         $this->postJson('/api/pedidos', $this->payload())
             ->assertUnprocessable()
-            ->assertExactJson(['message' => 'El cliente seleccionado estÃ¡ inactivo.']);
+            ->assertExactJson(['message' => 'El cliente seleccionado está inactivo.']);
 
         $this->assertDatabaseCount('pedidos', 0);
     }
@@ -76,7 +76,7 @@ class PedidoExternalServicesTest extends TestCase
 
         $this->postJson('/api/pedidos', $this->payload())
             ->assertServiceUnavailable()
-            ->assertExactJson(['message' => 'El servicio de clientes no estÃ¡ disponible.']);
+            ->assertExactJson(['message' => 'El servicio de clientes no está disponible.']);
 
         $this->assertDatabaseCount('pedidos', 0);
     }
@@ -110,7 +110,7 @@ class PedidoExternalServicesTest extends TestCase
 
         $this->postJson('/api/pedidos', $this->payload())
             ->assertUnprocessable()
-            ->assertExactJson(['message' => 'Uno de los productos seleccionados estÃ¡ inactivo.']);
+            ->assertExactJson(['message' => 'Uno de los productos seleccionados está inactivo.']);
 
         $this->assertDatabaseCount('pedidos', 0);
     }
@@ -144,7 +144,7 @@ class PedidoExternalServicesTest extends TestCase
 
         $this->postJson('/api/pedidos', $this->payload())
             ->assertServiceUnavailable()
-            ->assertExactJson(['message' => 'El servicio de productos no estÃ¡ disponible.']);
+            ->assertExactJson(['message' => 'El servicio de productos no está disponible.']);
 
         $this->assertDatabaseCount('pedidos', 0);
     }

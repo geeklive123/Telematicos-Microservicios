@@ -20,7 +20,7 @@ class ClienteService
                 ->get($this->url('/api/clientes'));
         } catch (ConnectionException $exception) {
             throw new PedidoCreationException(
-                'No se pudieron cargar los clientes porque el servicio no estÃ¡ disponible.',
+                'No se pudieron cargar los clientes porque el servicio no está disponible.',
                 503,
                 $exception,
             );
@@ -28,7 +28,7 @@ class ClienteService
 
         if (! $response->successful()) {
             throw new PedidoCreationException(
-                'No se pudieron cargar los clientes porque el servicio no estÃ¡ disponible.',
+                'No se pudieron cargar los clientes porque el servicio no está disponible.',
                 503,
             );
         }
@@ -36,7 +36,7 @@ class ClienteService
         $clientes = $this->collection($response, 'clientes');
 
         if ($clientes === null) {
-            throw new PedidoCreationException('El servicio de clientes devolviÃ³ una respuesta invÃ¡lida.', 503);
+            throw new PedidoCreationException('El servicio de clientes devolvió una respuesta inválida.', 503);
         }
 
         return array_values(array_filter(
@@ -55,7 +55,7 @@ class ClienteService
                 ->get($this->url("/api/clientes/{$clienteId}"));
         } catch (ConnectionException $exception) {
             throw new PedidoCreationException(
-                'El servicio de clientes no estÃ¡ disponible.',
+                'El servicio de clientes no está disponible.',
                 503,
                 $exception,
             );
@@ -66,17 +66,17 @@ class ClienteService
         }
 
         if (! $response->successful()) {
-            throw new PedidoCreationException('El servicio de clientes no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de clientes no está disponible.', 503);
         }
 
         $cliente = $this->resource($response, 'cliente');
 
         if (! is_array($cliente) || ! array_key_exists('activo', $cliente)) {
-            throw new PedidoCreationException('El servicio de clientes no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de clientes no está disponible.', 503);
         }
 
         if (! (bool) $cliente['activo']) {
-            throw new PedidoCreationException('El cliente seleccionado estÃ¡ inactivo.', 422);
+            throw new PedidoCreationException('El cliente seleccionado está inactivo.', 422);
         }
     }
 
@@ -85,7 +85,7 @@ class ClienteService
         $baseUrl = config('services.clientes.url');
 
         if (! is_string($baseUrl) || $baseUrl === '') {
-            throw new PedidoCreationException('El servicio de clientes no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de clientes no está disponible.', 503);
         }
 
         return rtrim($baseUrl, '/').$path;

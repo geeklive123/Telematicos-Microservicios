@@ -56,39 +56,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# CancelaciÃ³n de pedidos y stock
+# Cancelación de pedidos y stock
 
 Un pedido pendiente o pagado puede cancelarse. Pedidos Service repone por HTTP
 la cantidad de cada detalle en Productos Service antes de guardar el estado
 cancelado. La fila del pedido permanece bloqueada mientras se procesa la
-operaciÃ³n; una cancelaciÃ³n ya completada no vuelve a reponer stock.
+operación; una cancelación ya completada no vuelve a reponer stock.
 
-La reposiciÃ³n no es una transacciÃ³n distribuida. Si falla una llamada, vence
+La reposición no es una transacción distribuida. Si falla una llamada, vence
 su tiempo de espera, falla la persistencia local o se interrumpe el proceso,
 algunos productos pueden haber sido repuestos aunque el pedido siga sin
 cancelar. Cuando el fallo es capturado, se registra con el pedido y las
-reposiciones conocidas; una interrupciÃ³n abrupta puede impedir ese registro.
+reposiciones conocidas; una interrupción abrupta puede impedir ese registro.
 Una respuesta perdida puede dejar incierto el resultado del producto en curso.
-Cada reposiciÃ³n usa una clave estable por pedido y producto y el servicio de
-Productos debe aplicar su contrato idempotente. No se descuentan automÃ¡ticamente
+Cada reposición usa una clave estable por pedido y producto y el servicio de
+Productos debe aplicar su contrato idempotente. No se descuentan automáticamente
 los productos ya repuestos. Los registros antiguos cancelados no se corrigen
-automÃ¡ticamente.
+automáticamente.
 
-## Intentos de creaciÃ³n y conciliaciÃ³n
+## Intentos de creación y conciliación
 
-Cada creaciÃ³n registra un UUID, los datos normalizados y el progreso de stock
+Cada creación registra un UUID, los datos normalizados y el progreso de stock
 antes de modificar inventario. Los descuentos y compensaciones usan claves
-distintas, estables por intento y producto. Ante un error de conexiÃ³n al
+distintas, estables por intento y producto. Ante un error de conexión al
 descontar se reintenta una vez con la misma clave; si el resultado sigue siendo
 incierto, el intento queda en `needs_reconciliation`.
 
-Pedido y estado `completed` se guardan en la misma transacciÃ³n local. El mÃ©todo
+Pedido y estado `completed` se guardan en la misma transacción local. El método
 interno `PedidoService::resumeAttempt` devuelve el pedido ya completado o
 reanuda un intento `processing` no reclamado con sus datos y claves originales.
 No se ofrece un endpoint de reintento: enviar un nuevo POST inicia otro intento.
-Un intento `claimed` tras una interrupciÃ³n requiere revisiÃ³n operativa para
-comprobar que su proceso terminÃ³ antes de liberarlo; no hay vencimiento
-automÃ¡tico, para evitar dos procesadores simultÃ¡neos. Los intentos con
-compensaciÃ³n iniciada o resultado incierto requieren conciliaciÃ³n, no un
-reintento de creaciÃ³n automÃ¡tico.
+Un intento `claimed` tras una interrupción requiere revisión operativa para
+comprobar que su proceso terminó antes de liberarlo; no hay vencimiento
+automático, para evitar dos procesadores simultáneos. Los intentos con
+compensación iniciada o resultado incierto requieren conciliación, no un
+reintento de creación automático.
 

@@ -5,7 +5,7 @@
 @section('content')
     <div class="page-heading">
         <div>
-            <p class="eyebrow">GestiÃ³n comercial</p>
+            <p class="eyebrow">Gestión comercial</p>
             <h1>Pedidos</h1>
             <p class="muted">Consulte y administre los pedidos registrados.</p>
         </div>
@@ -22,7 +22,7 @@
                         <th>Fecha</th>
                         <th>Total</th>
                         <th>Estado</th>
-                        <th>MÃ©todo de pago</th>
+                        <th>Método de pago</th>
                         <th>Detalles</th>
                         <th class="actions-column">Acciones</th>
                     </tr>
@@ -46,7 +46,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="empty-state">AÃºn no hay pedidos registrados.</td>
+                            <td colspan="8" class="empty-state">Aún no hay pedidos registrados.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -54,8 +54,8 @@
         </div>
 
         @if ($pedidos->hasPages())
-            <nav class="pagination" aria-label="PaginaciÃ³n de pedidos">
-                <span>PÃ¡gina {{ $pedidos->currentPage() }} de {{ $pedidos->lastPage() }}</span>
+            <nav class="pagination" aria-label="Paginación de pedidos">
+                <span>Página {{ $pedidos->currentPage() }} de {{ $pedidos->lastPage() }}</span>
                 <div>
                     @if ($pedidos->onFirstPage())
                         <span class="button button-secondary is-disabled">Anterior</span>

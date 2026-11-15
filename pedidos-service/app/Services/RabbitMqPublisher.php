@@ -31,7 +31,7 @@ class RabbitMqPublisher
                 $channel->basic_publish($message, $config['exchange'], $config['routing_key'], true);
                 $channel->wait_for_pending_acks_returns(10);
                 if ($returned || $nacked) {
-                    throw new RuntimeException('El broker rechazÃ³ o no pudo enrutar el evento.');
+                    throw new RuntimeException('El broker rechazó o no pudo enrutar el evento.');
                 }
             } finally {
                 $channel->close();

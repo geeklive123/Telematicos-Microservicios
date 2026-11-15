@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthenticateJwt;
 use App\Http\Middleware\RequireRole;
+use App\Http\Middleware\RequireWebAuth;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias(['jwt' => AuthenticateJwt::class, 'role' => RequireRole::class]);
+        $middleware->alias(['jwt' => AuthenticateJwt::class, 'role' => RequireRole::class, 'web.auth' => RequireWebAuth::class]);
         $middleware->prependToPriorityList(SubstituteBindings::class, RequireRole::class);
         $middleware->prependToPriorityList(RequireRole::class, AuthenticateJwt::class);
     })

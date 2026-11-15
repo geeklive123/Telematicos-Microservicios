@@ -64,14 +64,14 @@ class PedidoService
             if ($attempt->status === 'completed' && $attempt->pedido_id !== null) {
                 return $attempt->pedido()->firstOrFail()->load('detalles');
             }
-            throw new PedidoCreationException('El intento no estÃ¡ disponible para reanudarse.', 409);
+            throw new PedidoCreationException('El intento no está disponible para reanudarse.', 409);
         }
 
         $attempt->refresh();
         $commitStarted = false;
         try {
             if (collect($attempt->stock_operations ?? [])->contains(fn ($operation) => isset($operation['restore']))) {
-                throw new PedidoCreationException('El intento requiere conciliaciÃ³n de inventario.', 503, null, true);
+                throw new PedidoCreationException('El intento requiere conciliación de inventario.', 503, null, true);
             }
             if ($attempt->resolved_details === null) {
                 $this->clienteService->validarClienteActivo($attempt->cliente_id, $token);
@@ -121,15 +121,15 @@ class PedidoService
             $attempt->update([
                 'status' => $uncertain ? 'needs_reconciliation' : 'failed',
                 'error_code' => $uncertain ? 'STOCK_RESULT_UNCERTAIN' : 'CREATION_FAILED',
-                'error_message' => $uncertain ? 'El resultado requiere conciliaciÃ³n de inventario.' : 'No se pudo crear el pedido.',
+                'error_message' => $uncertain ? 'El resultado requiere conciliación de inventario.' : 'No se pudo crear el pedido.',
             ]);
             if ($uncertain) {
-                throw new PedidoCreationException('El intento requiere conciliaciÃ³n de inventario.', 503, $exception);
+                throw new PedidoCreationException('El intento requiere conciliación de inventario.', 503, $exception);
             }
             if ($exception instanceof PedidoCreationException) {
                 throw $exception;
             }
-            Log::error('FallÃ³ la persistencia local de un pedido despuÃ©s de descontar stock.', [
+            Log::error('Falló la persistencia local de un pedido después de descontar stock.', [
                 'exception' => $exception,
                 'attempt_uuid' => $uuid,
             ]);
@@ -153,7 +153,7 @@ class PedidoService
                 $nuevoEstado = $data['estado'] ?? $pedido->estado;
 
                 if (! in_array($nuevoEstado, $pedido->estadosPermitidos(), true)) {
-                    throw new PedidoCreationException('La transiciÃ³n de estado solicitada no estÃ¡ permitida.', 422);
+                    throw new PedidoCreationException('La transición de estado solicitada no está permitida.', 422);
                 }
 
                 if ($nuevoEstado === 'cancelado' && $pedido->estado !== 'cancelado') {
@@ -176,7 +176,7 @@ class PedidoService
                 throw $exception;
             }
 
-            Log::error('FallÃ³ la cancelaciÃ³n del pedido; la reposiciÃ³n de stock puede ser parcial.', [
+            Log::error('Falló la cancelación del pedido; la reposición de stock puede ser parcial.', [
                 'pedido_id' => $pedido->getKey(),
                 'productos_repuestos' => $repuestos,
                 'producto_en_curso' => $productoEnCurso,
@@ -185,14 +185,14 @@ class PedidoService
 
             if ($exception instanceof PedidoCreationException) {
                 throw new PedidoCreationException(
-                    'No se pudo cancelar el pedido: el servicio de productos no estÃ¡ disponible o rechazÃ³ la reposiciÃ³n. La reposiciÃ³n puede ser parcial; revise el stock antes de reintentar.',
+                    'No se pudo cancelar el pedido: el servicio de productos no está disponible o rechazó la reposición. La reposición puede ser parcial; revise el stock antes de reintentar.',
                     $exception->status() === 409 ? 409 : 503,
                     $exception,
                 );
             }
 
             throw new PedidoCreationException(
-                'No se pudo cancelar el pedido. La reposiciÃ³n puede ser parcial; revise el stock antes de reintentar.',
+                'No se pudo cancelar el pedido. La reposición puede ser parcial; revise el stock antes de reintentar.',
                 500,
                 $exception,
             );

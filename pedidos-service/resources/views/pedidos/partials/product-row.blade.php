@@ -20,5 +20,5 @@
         <input class="cantidad-input quantity" type="number" name="detalles[{{ $index }}][cantidad]" min="1" value="{{ $detalle['cantidad'] ?? 1 }}" required>
     </td>
     <td><strong class="subtotal-value">Bs 0,00</strong></td>
-    <td><button class="remove-row icon-button" type="button" aria-label="Eliminar producto">Ã—</button></td>
+    <td><button class="remove-row icon-button" type="button" aria-label="Eliminar producto">×</button></td>
 </tr>

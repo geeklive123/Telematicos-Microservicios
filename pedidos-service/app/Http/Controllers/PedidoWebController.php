@@ -31,13 +31,13 @@ class PedidoWebController extends Controller
         $errores = [];
 
         try {
-            $clientes = $clienteService->listarActivos();
+            $clientes = $clienteService->listarActivos(session('auth_token'));
         } catch (PedidoCreationException $exception) {
             $errores[] = $exception->getMessage();
         }
 
         try {
-            $productos = $productoService->listarActivos();
+            $productos = $productoService->listarActivos(session('auth_token'));
         } catch (PedidoCreationException $exception) {
             $errores[] = $exception->getMessage();
         }
@@ -52,7 +52,7 @@ class PedidoWebController extends Controller
     public function store(StorePedidoRequest $request, PedidoService $pedidoService): RedirectResponse
     {
         try {
-            $pedido = $pedidoService->create($request->validated());
+            $pedido = $pedidoService->create($request->validated(), $request->session()->get('auth_token'));
         } catch (PedidoCreationException $exception) {
             return back()
                 ->withInput()
@@ -79,7 +79,7 @@ class PedidoWebController extends Controller
     public function update(UpdatePedidoRequest $request, Pedido $pedido, PedidoService $pedidoService): RedirectResponse
     {
         try {
-            $pedido = $pedidoService->update($pedido, $request->validated());
+            $pedido = $pedidoService->update($pedido, $request->validated(), $request->session()->get('auth_token'));
         } catch (PedidoCreationException $exception) {
             return back()->withInput()->with('error', $exception->getMessage());
         }

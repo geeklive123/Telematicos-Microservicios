@@ -12,7 +12,7 @@ Preferir:
 
 \- Form Requests
 
-\- Services para integraciÃ³n entre microservicios
+\- Services para integración entre microservicios
 
 \- Eloquent
 
@@ -20,11 +20,11 @@ Preferir:
 
 \- respuestas JSON claras
 
-\- cÃ³digos HTTP correctos
+\- códigos HTTP correctos
 
 
 
-La integraciÃ³n externa debe centralizarse en servicios, no directamente en Controllers.
+La integración externa debe centralizarse en servicios, no directamente en Controllers.
 
 
 

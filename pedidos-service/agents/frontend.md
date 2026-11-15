@@ -2,7 +2,7 @@
 
 
 
-La interfaz futura usarÃ¡ Blade.
+La interfaz futura usará Blade.
 
 
 
@@ -24,5 +24,5 @@ Debe permitir:
 
 
 
-No crear SPA salvo solicitud explÃ­cita.
+No crear SPA salvo solicitud explícita.
 

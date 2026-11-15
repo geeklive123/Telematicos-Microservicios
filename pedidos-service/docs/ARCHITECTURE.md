@@ -34,7 +34,7 @@ Pedidos Service administra:
 
 \- cantidades;
 
-\- precios histÃ³ricos;
+\- precios históricos;
 
 \- subtotal;
 
@@ -42,7 +42,7 @@ Pedidos Service administra:
 
 \- estado;
 
-\- mÃ©todo de pago.
+\- método de pago.
 
 
 
@@ -110,7 +110,7 @@ pedidos 1 ---- N detalle\_pedidos
 
 
 
-Esta relaciÃ³n sÃ­ usa Foreign Key real:
+Esta relación sí usa Foreign Key real:
 
 
 
@@ -126,7 +126,7 @@ producto\_id no tiene Foreign Key externa.
 
 
 
-\## ComunicaciÃ³n
+\## Comunicación
 
 
 
@@ -146,11 +146,11 @@ GET Productos Service /api/productos/{id}
 
 
 
-La comunicaciÃ³n es HTTP REST + JSON.
+La comunicación es HTTP REST + JSON.
 
 
 
-\## Datos histÃ³ricos
+\## Datos históricos
 
 
 
@@ -164,5 +164,5 @@ detalle\_pedidos debe guardar:
 
 
 
-Esto permite conservar cÃ³mo era la venta aunque luego el producto cambie de nombre o precio.
+Esto permite conservar cómo era la venta aunque luego el producto cambie de nombre o precio.
 

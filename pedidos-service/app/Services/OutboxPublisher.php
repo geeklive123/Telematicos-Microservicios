@@ -26,7 +26,7 @@ class OutboxPublisher
                 $event->last_error = null;
             } catch (Throwable $exception) {
                 $event->status = 'failed';
-                $event->last_error = 'PublicaciÃ³n fallida: '.get_class($exception);
+                $event->last_error = 'Publicación fallida: '.get_class($exception);
                 Log::error('No se pudo publicar un evento de outbox.', ['event_id' => $event->event_id, 'error_type' => get_class($exception)]);
             }
             $event->save();

@@ -77,7 +77,7 @@ class PedidoCancellationTest extends TestCase
             foreach ($destinos as $destino) {
                 $pedido = $this->pedido($actual);
                 $this->putJson("/api/pedidos/{$pedido->id}", ['estado' => $destino, 'metodo_pago' => 'qr'])
-                    ->assertUnprocessable()->assertExactJson(['message' => 'La transiciÃ³n de estado solicitada no estÃ¡ permitida.']);
+                    ->assertUnprocessable()->assertExactJson(['message' => 'La transición de estado solicitada no está permitida.']);
                 $this->assertSame($actual, $pedido->fresh()->estado);
                 $this->assertSame('efectivo', $pedido->fresh()->metodo_pago);
             }
@@ -95,11 +95,11 @@ class PedidoCancellationTest extends TestCase
         Log::spy();
 
         $this->putJson("/api/pedidos/{$pedido->id}", ['estado' => 'cancelado', 'metodo_pago' => 'qr'])
-            ->assertServiceUnavailable()->assertJsonPath('message', 'No se pudo cancelar el pedido: el servicio de productos no estÃ¡ disponible o rechazÃ³ la reposiciÃ³n. La reposiciÃ³n puede ser parcial; revise el stock antes de reintentar.');
+            ->assertServiceUnavailable()->assertJsonPath('message', 'No se pudo cancelar el pedido: el servicio de productos no está disponible o rechazó la reposición. La reposición puede ser parcial; revise el stock antes de reintentar.');
         $this->assertSame('pendiente', $pedido->fresh()->estado);
         $this->assertSame('efectivo', $pedido->fresh()->metodo_pago);
         Http::assertSentCount(2);
-        Log::shouldHaveReceived('error')->withArgs(fn ($message, $context) => str_contains($message, 'reposiciÃ³n de stock puede ser parcial')
+        Log::shouldHaveReceived('error')->withArgs(fn ($message, $context) => str_contains($message, 'reposición de stock puede ser parcial')
             && $context['pedido_id'] === $pedido->id
             && $context['productos_repuestos'] === [['producto_id' => 1, 'cantidad' => 2]]
             && $context['producto_en_curso'] === ['producto_id' => 7, 'cantidad' => 3])->once();
@@ -107,6 +107,7 @@ class PedidoCancellationTest extends TestCase
 
     public function test_interfaz_muestra_solo_transiciones_permitidas(): void
     {
+        $this->withSession(['auth_token' => 'web-test-token']);
         foreach (['pendiente' => ['pendiente', 'pagado', 'cancelado'], 'pagado' => ['pagado', 'completado', 'cancelado'], 'completado' => ['completado'], 'cancelado' => ['cancelado']] as $actual => $permitidos) {
             $pedido = $this->pedido($actual);
             $response = $this->get("/pedidos/{$pedido->id}/editar")->assertOk();
@@ -129,6 +130,7 @@ class PedidoCancellationTest extends TestCase
 
     public function test_cancelacion_web_y_reintento_muestran_mensajes_correctos(): void
     {
+        $this->withSession(['auth_token' => 'web-test-token']);
         Http::fake(['http://productos.test/*' => Http::response([], 200)]);
         $pedido = $this->pedido('pendiente');
         $this->put("/pedidos/{$pedido->id}", ['estado' => 'cancelado'])
@@ -142,13 +144,14 @@ class PedidoCancellationTest extends TestCase
 
     public function test_web_informa_transicion_invalida_y_fallo_remoto(): void
     {
+        $this->withSession(['auth_token' => 'web-test-token']);
         Http::fake(['http://productos.test/*' => Http::response([], 503)]);
         $finalizado = $this->pedido('completado');
         $this->from('/editar')->put("/pedidos/{$finalizado->id}", ['estado' => 'cancelado'])
-            ->assertRedirect('/editar')->assertSessionHas('error', 'La transiciÃ³n de estado solicitada no estÃ¡ permitida.');
+            ->assertRedirect('/editar')->assertSessionHas('error', 'La transición de estado solicitada no está permitida.');
         $pendiente = $this->pedido('pendiente');
         $this->from('/editar')->put("/pedidos/{$pendiente->id}", ['estado' => 'cancelado'])
-            ->assertRedirect('/editar')->assertSessionHas('error', fn ($message) => str_contains($message, 'servicio de productos no estÃ¡ disponible'));
+            ->assertRedirect('/editar')->assertSessionHas('error', fn ($message) => str_contains($message, 'servicio de productos no está disponible'));
         $this->assertSame('pendiente', $pendiente->fresh()->estado);
     }
 

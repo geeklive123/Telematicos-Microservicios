@@ -7,7 +7,7 @@
         <div>
             <p class="eyebrow">Nuevo registro</p>
             <h1>Crear pedido</h1>
-            <p class="muted">Seleccione el cliente y agregue uno o mÃ¡s productos.</p>
+            <p class="muted">Seleccione el cliente y agregue uno o más productos.</p>
         </div>
         <a class="button button-secondary" href="{{ route('pedidos.index') }}">Volver al listado</a>
     </div>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="field">
-                    <label for="metodo_pago">MÃ©todo de pago</label>
+                    <label for="metodo_pago">Método de pago</label>
                     <select id="metodo_pago" name="metodo_pago" required>
                         <option value="efectivo" @selected(old('metodo_pago', 'efectivo') === 'efectivo')>Efectivo</option>
                         <option value="qr" @selected(old('metodo_pago') === 'qr')>QR</option>
@@ -60,7 +60,7 @@
                     <span class="step">2</span>
                     <div>
                         <h2>Productos</h2>
-                        <p class="muted">Los precios mostrados son referenciales y se validarÃ¡n al guardar.</p>
+                        <p class="muted">Los precios mostrados son referenciales y se validarán al guardar.</p>
                     </div>
                 </div>
                 <button class="button button-secondary" type="button" id="agregar-producto" @disabled($productos === [])>Agregar producto</button>

@@ -6,17 +6,17 @@ Probar inicialmente:
 
 \- health
 
-\- creaciÃ³n de pedidos
+\- creación de pedidos
 
-\- relaciÃ³n pedido/detalle
+\- relación pedido/detalle
 
-\- cÃ¡lculo de subtotales
+\- cálculo de subtotales
 
 \- total
 
-\- validaciÃ³n de cliente
+\- validación de cliente
 
-\- validaciÃ³n de producto
+\- validación de producto
 
 \- manejo de cliente inexistente
 

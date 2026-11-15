@@ -3,14 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'AdministraciÃ³n de Pedidos') | Tienda PC</title>
+    <title>@yield('title', 'Administración de Pedidos') | Tienda PC</title>
     <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 </head>
 <body>
     <header class="site-header">
         <div class="container header-content">
             <a class="brand" href="{{ route('pedidos.index') }}">Tienda PC</a>
-            <span class="header-subtitle">AdministraciÃ³n de Pedidos</span>
+            <span class="header-subtitle">Administración de Pedidos</span>
+            @if (session()->has('auth_token'))
+                <div class="header-account">
+                    <span>{{ data_get(session('auth_user'), 'name', 'Usuario') }}@if (data_get(session('auth_user'), 'role')) <small>· {{ data_get(session('auth_user'), 'role') }}</small>@endif</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="button button-logout" type="submit">Cerrar sesión</button>
+                    </form>
+                </div>
+            @endif
         </div>
     </header>
 
@@ -38,7 +47,7 @@
     </main>
 
     <footer class="site-footer">
-        <div class="container">Pedidos Service Â· Tienda de Componentes de PC</div>
+        <div class="container">Pedidos Service · Tienda de Componentes de PC</div>
     </footer>
 
     @stack('scripts')

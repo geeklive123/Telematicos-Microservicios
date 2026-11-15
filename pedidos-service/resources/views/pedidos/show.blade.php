@@ -7,7 +7,7 @@
         <div>
             <p class="eyebrow">Detalle de pedido</p>
             <h1>Pedido #{{ $pedido->id }}</h1>
-            <p class="muted">InformaciÃ³n histÃ³rica de la venta.</p>
+            <p class="muted">Información histórica de la venta.</p>
         </div>
         <div class="heading-actions">
             <a class="button button-secondary" href="{{ route('pedidos.index') }}">Volver</a>
@@ -20,7 +20,7 @@
         <div class="summary-item"><span>Cliente ID</span><strong>{{ $pedido->cliente_id }}</strong></div>
         <div class="summary-item"><span>Fecha</span><strong>{{ $pedido->fecha->format('d/m/Y H:i') }}</strong></div>
         <div class="summary-item"><span>Estado</span><strong><span class="badge badge-{{ $pedido->estado }}">{{ ucfirst($pedido->estado) }}</span></strong></div>
-        <div class="summary-item"><span>MÃ©todo de pago</span><strong>{{ ucfirst($pedido->metodo_pago) }}</strong></div>
+        <div class="summary-item"><span>Método de pago</span><strong>{{ ucfirst($pedido->metodo_pago) }}</strong></div>
         <div class="summary-item"><span>Subtotal</span><strong>Bs {{ number_format((float) $pedido->subtotal, 2, ',', '.') }}</strong></div>
         <div class="summary-item summary-total"><span>Total</span><strong>Bs {{ number_format((float) $pedido->total, 2, ',', '.') }}</strong></div>
     </section>

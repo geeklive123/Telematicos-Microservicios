@@ -2,6 +2,10 @@
 
 return [
 
+    'auth' => [
+        'url' => env('AUTH_SERVICE_URL'),
+    ],
+
     'clientes' => [
         'url' => env('CLIENTES_SERVICE_URL'),
     ],

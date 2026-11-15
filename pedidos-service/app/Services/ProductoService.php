@@ -20,7 +20,7 @@ class ProductoService
                 ->get($this->url('/api/productos'));
         } catch (ConnectionException $exception) {
             throw new PedidoCreationException(
-                'No se pudieron cargar los productos porque el servicio no estÃ¡ disponible.',
+                'No se pudieron cargar los productos porque el servicio no está disponible.',
                 503,
                 $exception,
             );
@@ -28,7 +28,7 @@ class ProductoService
 
         if (! $response->successful()) {
             throw new PedidoCreationException(
-                'No se pudieron cargar los productos porque el servicio no estÃ¡ disponible.',
+                'No se pudieron cargar los productos porque el servicio no está disponible.',
                 503,
             );
         }
@@ -36,7 +36,7 @@ class ProductoService
         $productos = $this->collection($response, 'productos');
 
         if ($productos === null) {
-            throw new PedidoCreationException('El servicio de productos devolviÃ³ una respuesta invÃ¡lida.', 503);
+            throw new PedidoCreationException('El servicio de productos devolvió una respuesta inválida.', 503);
         }
 
         return array_values(array_filter(
@@ -58,7 +58,7 @@ class ProductoService
                 ->get($this->url("/api/productos/{$productoId}"));
         } catch (ConnectionException $exception) {
             throw new PedidoCreationException(
-                'El servicio de productos no estÃ¡ disponible.',
+                'El servicio de productos no está disponible.',
                 503,
                 $exception,
             );
@@ -69,17 +69,17 @@ class ProductoService
         }
 
         if (! $response->successful()) {
-            throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de productos no está disponible.', 503);
         }
 
         $producto = $this->resource($response, 'producto');
 
         if (! $this->isValidProduct($producto, $productoId)) {
-            throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de productos no está disponible.', 503);
         }
 
         if (! (bool) $producto['activo']) {
-            throw new PedidoCreationException('Uno de los productos seleccionados estÃ¡ inactivo.', 422);
+            throw new PedidoCreationException('Uno de los productos seleccionados está inactivo.', 422);
         }
 
         if ((int) $producto['stock'] < $cantidad) {
@@ -106,7 +106,7 @@ class ProductoService
             } catch (ConnectionException $exception) {
                 $uncertain = true;
                 if ($try === 1) {
-                    throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503, $exception, true);
+                    throw new PedidoCreationException('El servicio de productos no está disponible.', 503, $exception, true);
                 }
             }
         }
@@ -123,7 +123,7 @@ class ProductoService
         }
 
         if (! $response->successful()) {
-            throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503, null, true);
+            throw new PedidoCreationException('El servicio de productos no está disponible.', 503, null, true);
         }
     }
 
@@ -140,18 +140,18 @@ class ProductoService
                 ]);
         } catch (ConnectionException $exception) {
             throw new PedidoCreationException(
-                'El servicio de productos no estÃ¡ disponible.',
+                'El servicio de productos no está disponible.',
                 503,
                 $exception,
             );
         }
 
         if ($response->status() === 409) {
-            throw new PedidoCreationException('El servicio de productos rechazÃ³ la reposiciÃ³n por un conflicto.', 409);
+            throw new PedidoCreationException('El servicio de productos rechazó la reposición por un conflicto.', 409);
         }
 
         if (! $response->successful()) {
-            throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de productos no está disponible.', 503);
         }
     }
 
@@ -160,7 +160,7 @@ class ProductoService
         $baseUrl = config('services.productos.url');
 
         if (! is_string($baseUrl) || $baseUrl === '') {
-            throw new PedidoCreationException('El servicio de productos no estÃ¡ disponible.', 503);
+            throw new PedidoCreationException('El servicio de productos no está disponible.', 503);
         }
 
         return rtrim($baseUrl, '/').$path;

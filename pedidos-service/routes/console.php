@@ -12,7 +12,7 @@ Artisan::command('inspire', function () {
 Artisan::command('outbox:publish {--limit=100}', function (OutboxPublisher $publisher) {
     $limit = filter_var($this->option('limit'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
     if ($limit === false) {
-        $this->error('El lÃ­mite debe estar entre 1 y 10000.');
+        $this->error('El límite debe estar entre 1 y 10000.');
 
         return 1;
     }
